@@ -1,9 +1,11 @@
-package _02_cat_facts_API;
+	package _02_cat_facts_API;
 
 import _02_cat_facts_API.data_transfer_objects.CatWrapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import _01_intro_to_APIs.data_transfer_objects.Result;
 import reactor.core.publisher.Mono;
 
 /*
@@ -36,15 +38,18 @@ public class CatFactsApi {
         Use WebClient to make the request, converting the response to String.class.
         This request doesn't require url parameters, so you can omit the .uri() method call entirely
         */
-
-
+    	String results = webClient
+    			.get()
+    			.retrieve()
+    			.bodyToMono(String.class)
+    			.block();
 
         /*
         Print out the actual JSON response -
         this is what you would input into jsonschema2pojo.com
          */
 
-
+System.out.println(results);
         /*
         Use could use http://www.jsonschema2pojo.org/ to generate your POJO
         and place it in the cat_facts_API.data_transfer_objects package.
@@ -58,20 +63,27 @@ public class CatFactsApi {
 
     public CatWrapper getCatFact() {
 
+    	CatWrapper catWrappers = webClient
+    			.get()
+    			.retrieve()
+    			.bodyToMono(CatWrapper.class)
+    			.block();
+    			
         //Make the request, saving the response in an object of the type that you just created in your
         //data_transfer_objects package (CatWrapper)
-
+//CatWrapper[] catWrappers = results LEFT OFF HERE
 
         //return the Object
-        return null;
+
+        return catWrappers;
 
     }
 
     public String findCatFact(){
         //use the getCatFact method to retrieve a cat fact
-
-        //return the first (and only) String in the Arraylist of data in the response
-        return null;
+    	CatWrapper results = getCatFact();
+    	
+    	return results.getThing().get(0);
     }
 
     public void setWebClient(WebClient webClient) {

@@ -1,6 +1,7 @@
 package _04_jeopardy_api;
 
 import _01_intro_to_APIs.data_transfer_objects.Result;
+import _03_intro_to_authenticated_APIs.data_transfer_objects.ApiExampleWrapper;
 import _04_jeopardy_api.data_transfer_objects.Clue;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -47,6 +48,17 @@ public class JeopardyApi {
         //3
         //return the clue at the random index you just created
 
-        return null;
+    	 Clue[] c = webClient.get()
+                 .uri(uriBuilder -> uriBuilder
+                         .queryParam("q", value)
+                         .build())
+                 .retrieve()
+                 .bodyToMono(Clue[].class)
+                 .block();
+    	 
+    	 			Random r = new Random();
+    	 			int rand = r.nextInt(c.length);
+    	 			
+         return c[rand];
     }
 }

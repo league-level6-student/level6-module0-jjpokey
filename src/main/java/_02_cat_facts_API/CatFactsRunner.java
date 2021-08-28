@@ -4,9 +4,10 @@ public class CatFactsRunner {
 
     public static void main(String[] args) {
         CatFactsApi catFactsApi = new CatFactsApi();
-        catFactsApi.testRequest();
-//        String catFact = catFactsApi.getCatFact();
-//        System.out.println(catFact);
+       // catFactsApi.testRequest();
+        
+        String catFact = catFactsApi.findCatFact(); //problem with getCatFact - returning null
+        System.out.println(catFact);
     }
 
 }
